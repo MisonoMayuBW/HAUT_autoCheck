@@ -1,6 +1,9 @@
 import time,json,requests,random,datetime
 from campus import CampusCard
 
+from Card import open_device, CampusCard
+
+
 def main():
     #定义变量
     success,failure=[],[]
@@ -114,6 +117,7 @@ def getUserInfo(token):
     response = requests.post(sign_url, data=token)
     return response.json()['userInfo']
 
+
 #打卡提交函数
 def checkIn(userInfo,token):
     sign_url = "https://reportedh5.17wanxiao.com/sass/api/epmpics"
@@ -152,6 +156,9 @@ def wechatPush(title,sckey,success,fail,result):
             print("Server酱推送服务失败")
     except:
         print("微信推送参数错误")
-
+    
 if __name__ == '__main__':
-    main()
+    campus = CampusCard("19943850858", "qwe123ASD45", open_device('userinfo.txt'))
+    bills = campus.get_bill("2019-06-01", "2019-07-31")
+    print(campus.get_main_info())
+    print(bills)
